@@ -1,14 +1,21 @@
 import React, { useState } from 'react'
 import { Spin, Button } from 'antd'
 import 'antd/es/spin/style/css';
+import PageHeader from './Header'
 
 const CollabPage = () => {
     const [isLoading, setIsLoading] = useState(true)
 
     return(
         <div>
-            {isLoading ? <Spin></Spin> : <h3>done!</h3>}
-            <Button type="default" onClick={() => setIsLoading(!isLoading)}>toggle loading</Button>
+            <PageHeader></PageHeader>
+            {isLoading ? 
+                <Spin></Spin> 
+                : 
+                <div>
+                    <h3>done!</h3>
+                </div>}
+            <Button type="default" onClick={() => setIsLoading(!isLoading)}>{isLoading ? "stop " : "start "} loading</Button>
         </div>
     );
 }
