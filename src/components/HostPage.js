@@ -19,6 +19,7 @@ const HostPage = (props) => {
                     <PageHeader></PageHeader>
                     <form>
                         <Input size="large" placeholder="Playlist name" onChange={e => checkForText(e)}></Input>
+                        <Input size="large" placeholder="Username" onChange={e => checkForText(e)}></Input>
                         <Button type="primary" disabled={!hasText} onClick={() => setGoToCollab(!goToCollab)}>Host Room</Button>
                     </form>
                 </div>:
