@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { Input, Button } from 'antd'
 import 'antd/dist/antd.css';
-import PageHeader from './Header'
+import { Redirect } from 'react-router-dom'
 
 const JoinPage = () => {
     const [hasText, setHasText] = useState(false)
+    const [goToCollab, setGoToCollab] = useState(false)
     const [username, setUsername] = useState("")
     const [roomCode, setRoomCode] = useState("")
     const [roomPassword, setRoomPassword] = useState("")
@@ -23,31 +24,41 @@ const JoinPage = () => {
             default:
                 break;
         }
-
         setHasText(username && roomCode && roomPassword)
+    }
+
+    const enterRoom = () => {
+        //call some function to validate room credentials
+        //then set goToCollab to true
+        setGoToCollab(!goToCollab)
     }
 
     return (
         <div>
-            <PageHeader></PageHeader>
-            <form>
-                <Input 
-                    size="large"
-                    placeholder="Username" 
-                    value={username} 
-                    onChange={e => onChange(e, "username")}/>
-                <Input 
-                    size="large" 
-                    placeholder="Room code" 
-                    value={roomCode} 
-                    onChange={e => onChange(e, "roomcode")}/>
-                <Input 
-                    size="large" 
-                    placeholder="Room Password" 
-                    value={roomPassword} 
-                    onChange={e => onChange(e, "roompassword")}/>
-                <Button type="primary" disabled={!hasText}>Join Room</Button>
-            </form>
+            {!goToCollab ? 
+                <div>
+                    <h1>Join</h1>
+                    <form>
+                        <Input 
+                            size="large"
+                            placeholder="Username" 
+                            value={username} 
+                            onChange={e => onChange(e, "username")}/>
+                        <Input 
+                            size="large" 
+                            placeholder="Room code" 
+                            value={roomCode} 
+                            onChange={e => onChange(e, "roomcode")}/>
+                        <Input 
+                            size="large" 
+                            placeholder="Room Password" 
+                            value={roomPassword} 
+                            onChange={e => onChange(e, "roompassword")}/>
+                        <Button type="primary" disabled={!hasText} onClick={() => enterRoom()}>Join Room</Button>
+                    </form>
+                </div>:
+                <Redirect to="/collab"></Redirect>
+            }
         </div>
     );
 }

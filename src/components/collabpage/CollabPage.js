@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { Spin, Button, Input, Tooltip, Form } from 'antd'
 import 'antd/es/spin/style/css';
-import PageHeader from './Header'
 import { SearchOutlined } from '@ant-design/icons';
-import { addSong } from '../features/songlist/songlistSlice'
+import { addSong } from '../../features/songlist/songlistSlice'
 import { connect } from 'react-redux'
 import { createSelector } from '@reduxjs/toolkit';
 
@@ -45,7 +44,6 @@ const CollabPage = ({ songListProp, addSong }) => {
 
     return(
         <div>
-            <PageHeader></PageHeader>
             {isLoading ? 
                 <Spin tip="Connecting to room..."></Spin> 
                 : 

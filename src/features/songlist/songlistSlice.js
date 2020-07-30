@@ -8,7 +8,6 @@ const songlistSlice = createSlice({
     reducers: {
         addSong: (state, action) => {
             state.songList.push(action.payload)
-            console.log(state)
             //todo: check if song exists in list before pushing it? make another function for it?
         },
         removeSong(state, action) {
