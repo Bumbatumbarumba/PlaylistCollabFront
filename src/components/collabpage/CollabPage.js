@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
-import { Spin, Button, Input, Tooltip, Form } from 'antd'
-import 'antd/es/spin/style/css';
-import { SearchOutlined } from '@ant-design/icons';
-import { addSong } from '../../features/songlist/songlistSlice'
 import { connect } from 'react-redux'
 import { createSelector } from '@reduxjs/toolkit';
+import { addSong } from '../../features/songlist/songlistSlice'
+import { Spin, Button, Input, Tooltip, Form } from 'antd'
+import { SearchOutlined } from '@ant-design/icons';
+import 'antd/es/spin/style/css';
+import { SongList } from './SongList'
+
 
 
 const getSongs = state => state.songlist.songList
@@ -19,7 +21,7 @@ const selectorSongs = createSelector(
 const CollabPage = ({ songListProp, addSong }) => {
     const [isLoading, setIsLoading] = useState(true)
     const [songTitle, setSongTitle] = useState("")
-    const [songArtistText, setSongArtistText] = useState("")
+    const [songArtist, setSongArtist] = useState("")
 
     const onChange = (e, input) => {
         switch (input) {
@@ -27,7 +29,7 @@ const CollabPage = ({ songListProp, addSong }) => {
                 setSongTitle(e.target.value)
                 break;
             case "artist":
-                setSongArtistText(e.target.value)
+                setSongArtist(e.target.value)
                 break;
             default:
                 break;
@@ -37,9 +39,9 @@ const CollabPage = ({ songListProp, addSong }) => {
     const onFormSubmit = e => {
         e.preventDefault()
         let username = "bart"
-        addSong({songTitle, songArtistText, username})
+        addSong({songId: Math.random(), songTitle, songArtist, username})
         setSongTitle("")
-        setSongArtistText("")
+        setSongArtist("")
     }
 
     return(
@@ -51,16 +53,10 @@ const CollabPage = ({ songListProp, addSong }) => {
                     <form>
                         <h3>Playlist title will go here</h3>
                         <Input size="large" placeholder="Song Title" value={songTitle} onChange={e => onChange(e, "title")}></Input>
-                        <Input size="large" placeholder="Song Artist" value={songArtistText} onChange={e => onChange(e, "artist")}></Input>
-                        <Tooltip title="Search">
-                            <Button type="primary" htmltype="submit" shape="circle" icon={<SearchOutlined/>} onClick={onFormSubmit}></Button>
-                        </Tooltip>
+                        <Input size="large" placeholder="Song Artist" value={songArtist} onChange={e => onChange(e, "artist")}></Input>
+                        <Button type="primary" htmltype="submit" onClick={onFormSubmit}>Add Song</Button>
                     </form>
-                    <ul>
-                        {Object.values(songListProp).map(song => (
-                            <li>{song.songTitle} by {song.songArtistText} - added by {song.username}</li>
-                        ))}
-                    </ul>
+                    <SongList currentList={songListProp} currentSearchTitle={songTitle} currentArtist={songArtist}></SongList>
                 </div>}
             <Button type="default" onClick={() => setIsLoading(!isLoading)}>{isLoading ? "stop " : "start "} loading</Button>
         </div>

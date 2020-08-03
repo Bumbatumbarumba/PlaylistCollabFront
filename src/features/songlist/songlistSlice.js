@@ -11,7 +11,8 @@ const songlistSlice = createSlice({
             //todo: check if song exists in list before pushing it? make another function for it?
         },
         removeSong(state, action) {
-            //todo
+            console.log(action)
+            state.songList.filter(song => song.songId === action.payload.songId)
         }
     }
 })
