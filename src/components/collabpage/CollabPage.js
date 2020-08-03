@@ -19,9 +19,10 @@ const selectorSongs = createSelector(
 
 
 const CollabPage = ({ songListProp, addSong }) => {
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(false)
     const [songTitle, setSongTitle] = useState("")
     const [songArtist, setSongArtist] = useState("")
+    const [playlistTitle, setPlaylistTitle] = useState("")
 
     const onChange = (e, input) => {
         switch (input) {
@@ -51,14 +52,13 @@ const CollabPage = ({ songListProp, addSong }) => {
                 : 
                 <div>
                     <form>
-                        <h3>Playlist title will go here</h3>
+                        <h3>{playlistTitle}</h3>
                         <Input size="large" placeholder="Song Title" value={songTitle} onChange={e => onChange(e, "title")}></Input>
                         <Input size="large" placeholder="Song Artist" value={songArtist} onChange={e => onChange(e, "artist")}></Input>
                         <Button type="primary" htmltype="submit" onClick={onFormSubmit}>Add Song</Button>
                     </form>
                     <SongList currentList={songListProp} currentSearchTitle={songTitle} currentArtist={songArtist}></SongList>
                 </div>}
-            <Button type="default" onClick={() => setIsLoading(!isLoading)}>{isLoading ? "stop " : "start "} loading</Button>
         </div>
     );
 }

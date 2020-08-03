@@ -8,11 +8,16 @@ const songlistSlice = createSlice({
     reducers: {
         addSong: (state, action) => {
             state.songList.push(action.payload)
-            //todo: check if song exists in list before pushing it? make another function for it?
         },
-        removeSong(state, action) {
-            console.log(action)
-            state.songList.filter(song => song.songId === action.payload.songId)
+        removeSong: (state, action) => {
+            //why can I use .push to add but not .filter to remove???
+            let temp = []
+            state.songList.forEach(song => {
+                if (song.songId !== action.payload.songId) {
+                    temp.push(song)
+                }
+            })
+            state.songList = temp
         }
     }
 })
