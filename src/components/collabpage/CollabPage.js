@@ -51,12 +51,17 @@ const CollabPage = ({ songListProp, addSong }) => {
                 <Spin tip="Connecting to room..."></Spin> 
                 : 
                 <div>
-                    <form>
-                        <h3>{playlistTitle}</h3>
-                        <Input size="large" placeholder="Song Title" value={songTitle} onChange={e => onChange(e, "title")}></Input>
-                        <Input size="large" placeholder="Song Artist" value={songArtist} onChange={e => onChange(e, "artist")}></Input>
-                        <Button type="primary" htmltype="submit" onClick={onFormSubmit}>Add Song</Button>
-                    </form>
+                    <div>
+                        <form>
+                            <h3>{playlistTitle}</h3>
+                            <Input size="large" placeholder="Song Title" value={songTitle} onChange={e => onChange(e, "title")}></Input>
+                            <Input size="large" placeholder="Song Artist" value={songArtist} onChange={e => onChange(e, "artist")}></Input>
+                            <Button type="primary" htmltype="submit" onClick={onFormSubmit}>Add Song</Button>
+                        </form>
+                        <div>
+                            <h2>show spotify query results here</h2>
+                        </div>
+                    </div>
                     <SongList currentList={songListProp} currentSearchTitle={songTitle} currentArtist={songArtist}></SongList>
                 </div>}
         </div>

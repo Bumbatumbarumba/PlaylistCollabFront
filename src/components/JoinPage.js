@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
-import { Input, Button } from 'antd'
-import 'antd/dist/antd.css';
 import { Redirect } from 'react-router-dom'
+import { Input, Button, Spin } from 'antd'
+import 'antd/dist/antd.css';
+import { JoinRoom } from '../utils/HttpHelper'
 
 const JoinPage = () => {
     const [hasText, setHasText] = useState(false)
     const [goToCollab, setGoToCollab] = useState(false)
+    const [waitingForHttpResponse, setWaitingForHttpResponse] = useState("waiting")
+
     const [username, setUsername] = useState("")
     const [roomCode, setRoomCode] = useState("")
     const [roomPassword, setRoomPassword] = useState("")
@@ -30,7 +33,13 @@ const JoinPage = () => {
     const enterRoom = () => {
         //call some function to validate room credentials
         //then set goToCollab to true
+        //JoinRoom(77777777)
+
         setGoToCollab(!goToCollab)
+    }
+
+    const test = () => {
+        JoinRoom(77777777)
     }
 
     return (
@@ -38,6 +47,7 @@ const JoinPage = () => {
             {!goToCollab ? 
                 <div>
                     <h1>Join</h1>
+                    <Button type="primary" onClick={test}>HTTP TEST</Button>
                     <form>
                         <Input 
                             size="large"
@@ -54,7 +64,7 @@ const JoinPage = () => {
                             placeholder="Room Password" 
                             value={roomPassword} 
                             onChange={e => onChange(e, "roompassword")}/>
-                        <Button type="primary" disabled={!hasText} onClick={() => enterRoom()}>Join Room</Button>
+                        <Button type="primary" disabled={!hasText} onClick={enterRoom}>Join Room</Button>
                     </form>
                 </div>:
                 <Redirect to="/collab"></Redirect>

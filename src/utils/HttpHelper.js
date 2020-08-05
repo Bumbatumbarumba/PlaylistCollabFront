@@ -1,7 +1,7 @@
 /**
  * Wraps data and sends and recieves http requests
  */
-import Axios from 'axios'
+import axios from 'axios'
 
 //LOOK INTO THIS:
 //https://stackoverflow.com/questions/58381551/how-to-avoid-then-hell-in-javascript?noredirect=1&lq=1
@@ -23,8 +23,20 @@ export const WrapUserDataInJson = (userName, roomCode, roomPassword) => {
     }
 }
 
-export const JoinRoom = (roomCode) => {
-
+export const JoinRoom = async (roomCode) => {
+    try {
+        var res = await axios.post("http://localhost:9000/createroom", {
+            test:roomCode
+        })
+        if (res.status === 200) {
+            console.log(res)
+        } else {
+            console.log("failed, but here's res anyways")
+            console.log(res)
+        }
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 export const HostRoom = () => {
