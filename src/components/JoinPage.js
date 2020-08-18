@@ -7,7 +7,7 @@ import { JoinRoom } from '../utils/HttpHelper'
 const JoinPage = () => {
     const [hasText, setHasText] = useState(false)
     const [goToCollab, setGoToCollab] = useState(false)
-    const [waitingForHttpResponse, setWaitingForHttpResponse] = useState("waiting")
+    const [waitingForHttpResponse, setWaitingForHttpResponse] = useState(false)
 
     const [username, setUsername] = useState("")
     const [roomCode, setRoomCode] = useState("")
@@ -33,13 +33,11 @@ const JoinPage = () => {
     const enterRoom = () => {
         //call some function to validate room credentials
         //then set goToCollab to true
-        //JoinRoom(77777777)
-
-        setGoToCollab(!goToCollab)
-    }
-
-    const test = () => {
-        JoinRoom(77777777)
+        setWaitingForHttpResponse(true)
+        var res = JoinRoom(77777777)
+        console.log(goToCollab)
+        setGoToCollab(res)
+        console.log(goToCollab)
     }
 
     return (
@@ -47,7 +45,6 @@ const JoinPage = () => {
             {!goToCollab ? 
                 <div>
                     <h1>Join</h1>
-                    <Button type="primary" onClick={test}>HTTP TEST</Button>
                     <form>
                         <Input 
                             size="large"
@@ -64,8 +61,9 @@ const JoinPage = () => {
                             placeholder="Room Password" 
                             value={roomPassword} 
                             onChange={e => onChange(e, "roompassword")}/>
-                        <Button type="primary" disabled={!hasText} onClick={enterRoom}>Join Room</Button>
+                        <Button type="primary" disabled={!hasText && !waitingForHttpResponse} onClick={enterRoom}>Join Room</Button>
                     </form>
+                    <Spin spinning={waitingForHttpResponse} tip="Connecting to room..."></Spin>
                 </div>:
                 <Redirect to="/collab"></Redirect>
             }

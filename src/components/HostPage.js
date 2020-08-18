@@ -3,6 +3,7 @@ import { Input, Button, Tooltip } from 'antd'
 import { QuestionCircleFilled } from '@ant-design/icons'
 import 'antd/dist/antd.css';
 import { Redirect } from 'react-router-dom'
+import { HostRoom, GenerateRoomCode } from '../utils/HttpHelper';
 
 const HostPage = (props) => {  
     const [goToCollab, setGoToCollab] = useState(false)
@@ -32,11 +33,17 @@ const HostPage = (props) => {
         setHasText(playlistTitle && username && hostKey)
     }
 
+    const test = () => {
+        var roomcode = GenerateRoomCode()
+        //HostRoom(WrapHostDataInJson())
+    }
+
     return (
         <div>
             {!goToCollab ? 
                 <div>
                     <h1>Host</h1>
+                    <Button type="primary" onClick={test}>HTTP TEST FOR HOSTING</Button>
                     <form>
                         <Input size="large"
                             value={playlistTitle}
